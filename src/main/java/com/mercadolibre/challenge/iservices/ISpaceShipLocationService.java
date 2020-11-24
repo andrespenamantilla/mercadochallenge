@@ -17,4 +17,8 @@ public interface ISpaceShipLocationService {
     Boolean validateIfADecryptedMessageIsDesfasedOrCorrupt(String messageDecrypted);
 
     SpaceShipResponse getLocationAndMessage(List<Satellite> satellites);
+
+    Boolean validateIfThePetitionIsOk(List<Satellite> satellites);
+
+    List<Satellite> validateSplitPetition(Satellite satellite, List<Satellite> satellites);
 }

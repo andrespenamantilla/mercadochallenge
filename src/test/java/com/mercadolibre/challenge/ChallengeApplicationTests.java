@@ -2,6 +2,8 @@ package com.mercadolibre.challenge;
 
 import com.mercadolibre.challenge.iservices.ISpaceShipLocationService;
 import com.mercadolibre.challenge.pojos.Position;
+import com.mercadolibre.challenge.pojos.Satellite;
+import com.mercadolibre.challenge.utils.Constants;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -86,6 +88,7 @@ class ChallengeApplicationTests {
         assert(!spaceShipLocationService.getMessage(satellitesWithNotAValidMessage).equals("este es un mensaje secreto"));
         assert (spaceShipLocationService.validateIfADecryptedMessageIsDesfasedOrCorrupt(spaceShipLocationService.getMessage(satellitesWithNotAValidMessage)));
     }
+
 
     public void initializeSatellitesWithValidMessage(){
         kenobyMessages[0] = "este";

@@ -1,4 +1,4 @@
-package com.mercadolibre.challenge;
+package com.mercadolibre.challenge.utils;
 
 import com.mercadolibre.challenge.pojos.Position;
 

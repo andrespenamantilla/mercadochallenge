@@ -1,7 +1,7 @@
 package com.mercadolibre.challenge.services;
 
-import com.mercadolibre.challenge.Constants;
-import com.mercadolibre.challenge.Utils;
+import com.mercadolibre.challenge.utils.Constants;
+import com.mercadolibre.challenge.utils.Utils;
 import com.mercadolibre.challenge.iservices.ISpaceShipLocationService;
 import com.mercadolibre.challenge.pojos.Position;
 import com.mercadolibre.challenge.pojos.Satellite;
@@ -29,6 +29,7 @@ public class SpaceShipLocationService implements ISpaceShipLocationService {
      * x3 = 500,  y3 = 100, r3 = satoDistance
      */
 
+    @Override
     public Position getLocation(Double kenobiDistance, Double skywalkerDistance, Double satoDistance) {
 
         Double A, B, C, D, E, F, X, Y;
@@ -49,6 +50,7 @@ public class SpaceShipLocationService implements ISpaceShipLocationService {
 
     }
 
+    @Override
     public String getMessage(List<String[]> codes) {
         String[] code = new String[5];
         String messageDecrypted = "";
@@ -72,6 +74,7 @@ public class SpaceShipLocationService implements ISpaceShipLocationService {
         return messageDecrypted;
     }
 
+    @Override
     public Boolean validateIfADecryptedMessageIsDesfasedOrCorrupt(String messageDecrypted) {
         Set<String> messageDecryptedSet = new LinkedHashSet<>();
         Arrays.stream(messageDecrypted.trim().split(" ")).forEach(word -> {
@@ -84,6 +87,7 @@ public class SpaceShipLocationService implements ISpaceShipLocationService {
             return false;
     }
 
+    @Override
     public SpaceShipResponse getLocationAndMessage(List<Satellite> satellites) {
         List<String[]> codes = new ArrayList<>();
         AtomicReference<Double> kenobiDistance = new AtomicReference<>(0d);
@@ -120,11 +124,39 @@ public class SpaceShipLocationService implements ISpaceShipLocationService {
             return null;
     }
 
+    @Override
+    public Boolean validateIfThePetitionIsOk(List<Satellite> satellites) {
+        AtomicReference<Boolean> petitionOk = new AtomicReference<>(false);
+            if (satellites.size() > 0) {
+                satellites.forEach(satellite -> {
+                    if (!satellite.getName().equals("") || satellite.getName() != null) {
+                        petitionOk.set(true);
+                    }
+                    if (satellite.getDistance() != null && satellite.getDistance() > 0) {
+                        petitionOk.set(true);
+                    }
+                    if (satellite.getMessage() != null && satellite.getMessage().length > 0) {
+                        petitionOk.set(true);
+                    }
+                });
+            }
+        return petitionOk.get();
+    }
+
+
     public Boolean validateIfTheDistancesAreClose(Double realDistance, Double givenDistance) {
         if ((realDistance - givenDistance <= 1d && realDistance - givenDistance >= 0d)
                 || (givenDistance - realDistance <= 1d && givenDistance - realDistance >= 0d)) {
             return true;
         } else
             return false;
+    }
+
+    @Override
+    public List<Satellite> validateSplitPetition(Satellite satellite, List<Satellite> satellites) {
+        if (satellites.size() < 3) {
+            satellites.add(satellite);
+        }
+        return satellites;
     }
 }
