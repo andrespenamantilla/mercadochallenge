@@ -1,7 +1,5 @@
 package com.mercadolibre.challenge.pojos;
 
-import com.lemmingapex.trilateration.NonLinearLeastSquaresSolver;
-
 import lombok.Data;
 
 @Data
