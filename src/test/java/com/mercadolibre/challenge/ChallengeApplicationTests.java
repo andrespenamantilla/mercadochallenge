@@ -2,7 +2,6 @@ package com.mercadolibre.challenge;
 
 import com.mercadolibre.challenge.iservices.ISpaceShipLocationService;
 import com.mercadolibre.challenge.pojos.Position;
-import com.mercadolibre.challenge.pojos.Satellite;
 import com.mercadolibre.challenge.utils.Constants;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -21,9 +20,11 @@ class ChallengeApplicationTests {
     @Autowired
     private ISpaceShipLocationService spaceShipLocationService;
 
-    List<String[]> satellitesWithValidMessage = new ArrayList<>();;
-    List<String[]> satellitesWithNotAValidMessage = new ArrayList<>();;
-    String[] skywalkerMessages = new String[5], kenobyMessages = new String[5], satoMessages = new String[5];
+    private List<String[]> satellitesWithValidMessage = new ArrayList<>();
+
+    private List<String[]> satellitesWithNotAValidMessage = new ArrayList<>();
+
+    private String[] skywalkerMessages = new String[5], kenobyMessages = new String[5], satoMessages = new String[5];
 
     @Test
     void contextLoads() {
@@ -85,12 +86,11 @@ class ChallengeApplicationTests {
     @Test
     public void validateIfSecretMessageIsNotAValidMessage() {
         initializeSatellitesWithNotAValidMessage();
-        assert(!spaceShipLocationService.getMessage(satellitesWithNotAValidMessage).equals("este es un mensaje secreto"));
+        assert (!spaceShipLocationService.getMessage(satellitesWithNotAValidMessage).equals("este es un mensaje secreto"));
         assert (spaceShipLocationService.validateIfADecryptedMessageIsDesfasedOrCorrupt(spaceShipLocationService.getMessage(satellitesWithNotAValidMessage)));
     }
 
-
-    public void initializeSatellitesWithValidMessage(){
+    public void initializeSatellitesWithValidMessage() {
         kenobyMessages[0] = "este";
         kenobyMessages[1] = "";
         kenobyMessages[2] = "";
@@ -115,7 +115,7 @@ class ChallengeApplicationTests {
 
     }
 
-    public void initializeSatellitesWithNotAValidMessage(){
+    public void initializeSatellitesWithNotAValidMessage() {
         kenobyMessages[0] = "";
         kenobyMessages[1] = "este";
         kenobyMessages[2] = "es";

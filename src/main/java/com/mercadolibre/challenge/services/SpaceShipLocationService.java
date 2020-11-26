@@ -29,6 +29,10 @@ public class SpaceShipLocationService implements ISpaceShipLocationService {
      * x3 = 500,  y3 = 100, r3 = satoDistance
      */
 
+
+    /***
+     * This function obtain the close value between three satellites
+     * */
     @Override
     public Position getLocation(Double kenobiDistance, Double skywalkerDistance, Double satoDistance) {
 
@@ -50,6 +54,10 @@ public class SpaceShipLocationService implements ISpaceShipLocationService {
 
     }
 
+
+    /***
+     * This function decrypt de message
+     * */
     @Override
     public String getMessage(List<String[]> codes) {
         String[] code = new String[5];
@@ -74,6 +82,10 @@ public class SpaceShipLocationService implements ISpaceShipLocationService {
         return messageDecrypted;
     }
 
+
+    /***
+     * This function validate if the message is not corrupt or desfased
+     * */
     @Override
     public Boolean validateIfADecryptedMessageIsDesfasedOrCorrupt(String messageDecrypted) {
         Set<String> messageDecryptedSet = new LinkedHashSet<>();
@@ -87,6 +99,11 @@ public class SpaceShipLocationService implements ISpaceShipLocationService {
             return false;
     }
 
+
+    /***
+     * Given the information of three satellites thiw function calculate
+     * the position and the message an encapsulates it on a respose
+     * */
     @Override
     public SpaceShipResponse getLocationAndMessage(List<Satellite> satellites) {
         List<String[]> codes = new ArrayList<>();
@@ -124,6 +141,11 @@ public class SpaceShipLocationService implements ISpaceShipLocationService {
             return null;
     }
 
+
+    /***
+     * Given the information of three satellites thiw function calculate
+     * the position and the message an encapsulates it on a respose
+     * */
     @Override
     public Boolean validateIfThePetitionIsOk(List<Satellite> satellites) {
         AtomicReference<Boolean> petitionOk = new AtomicReference<>(false);
@@ -143,7 +165,10 @@ public class SpaceShipLocationService implements ISpaceShipLocationService {
         return petitionOk.get();
     }
 
-
+    /***
+     * this function validate if the given distance and the knowing distance are so close
+     * if the distances are close returns returns true and it indicates that the math operation is right
+     * */
     public Boolean validateIfTheDistancesAreClose(Double realDistance, Double givenDistance) {
         if ((realDistance - givenDistance <= 1d && realDistance - givenDistance >= 0d)
                 || (givenDistance - realDistance <= 1d && givenDistance - realDistance >= 0d)) {
@@ -152,6 +177,9 @@ public class SpaceShipLocationService implements ISpaceShipLocationService {
             return false;
     }
 
+    /***
+     * this functions validates the scenario when the petition is submited in pieces ( POST split service )
+     * */
     @Override
     public List<Satellite> validateSplitPetition(Satellite satellite, List<Satellite> satellites) {
         if (satellites.size() < 3) {
